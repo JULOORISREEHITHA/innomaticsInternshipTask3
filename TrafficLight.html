@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Traffic Light System</title>
+    <style>
+        /* index */
+       
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        
+        h2 {
+            margin-bottom: 10px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/TrafficLights.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+        }
+        select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .traffic-light {
+            width: 60px;
+            height: 180px;
+            background: black;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .light {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: gray;
+        }
+    </style>
+</head>
+<body>
+    <!-- index -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Atm.html">ATM</a>
+        <a href="OnlineShopping.html">Shopping</a>
+        <a href="StudentGrade.html">Grading</a>
+        <a href="TrafficLight.html">Traffic Light</a>
+        <a href="Flight.html">Flight Booking</a>
+        <a href="Electricity.html">Electricity Bill</a>
+        <a href="Fitness.html">Gym Plan</a>
+        <a href="JobApplication.html">Job Filter</a>
+        <a href="Ecommerce.html">Coupons</a>
+    </div>
+
+    <div class="container">
+        <h2>Smart Traffic Light System</h2>
+        
+        <div class="traffic-light">
+            <div class="light" id="red"></div>
+            <div class="light" id="yellow"></div>
+            <div class="light" id="green"></div>
+        </div>
+
+        <label>Select Traffic Density:</label>
+        <select id="density">
+            <option value="heavy">Heavy Traffic</option>
+            <option value="moderate">Moderate Traffic</option>
+            <option value="light">Light Traffic</option>
+        </select>
+        
+        <button onclick="controlTrafficLight()">Check Signal Duration</button>
+        
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function trafficLightControl(density) {
+            let greenTime;
+            
+            if (density === "heavy") {
+                greenTime = 60; // Heavy traffic → Green for 60 seconds
+            } else if (density === "moderate") {
+                greenTime = 40; // Moderate traffic → Green for 40 seconds
+            } else {
+                greenTime = 20; // Light traffic → Green for 20 seconds
+            }
+
+            return greenTime;
+        }
+
+        function controlTrafficLight() {
+            let density = document.getElementById("density").value;
+            let message = document.getElementById("message");
+            let greenTime = trafficLightControl(density);
+
+            // Reset traffic light colors
+            document.getElementById("red").style.background = "gray";
+            document.getElementById("yellow").style.background = "gray";
+            document.getElementById("green").style.background = "gray";
+
+            // Display message
+            message.style.color = "green";
+            message.innerHTML = `🚦 Green light will stay on for <b>${greenTime} seconds</b>.`;
+
+            // Change traffic light colors based on duration
+            document.getElementById("red").style.background = "red";
+
+            setTimeout(() => {
+                document.getElementById("red").style.background = "gray";
+                document.getElementById("yellow").style.background = "yellow";
+            }, 2000);
+
+            setTimeout(() => {
+                document.getElementById("yellow").style.background = "gray";
+                document.getElementById("green").style.background = "green";
+            }, 4000);
+
+            setTimeout(() => {
+                document.getElementById("green").style.background = "gray";
+                document.getElementById("red").style.background = "red";
+            }, (greenTime + 4) * 1000);
+        }
+    </script>
+
+</body>
+</html>

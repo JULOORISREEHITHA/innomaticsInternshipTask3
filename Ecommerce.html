@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Coupon Redemption</title>
+    <style>
+        /* index */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/Coupons.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+        }
+        
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .coupon-info {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .coupon-info h3 {
+            margin: 5px 0;
+            color: #007bff;
+        }
+        .coupon-info p {
+            font-size: 14px;
+            color: #333;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<!-- index -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="Atm.html">ATM</a>
+    <a href="OnlineShopping.html">Shopping</a>
+    <a href="StudentGrade.html">Grading</a>
+    <a href="TrafficLight.html">Traffic Light</a>
+    <a href="Flight.html">Flight Booking</a>
+    <a href="Electricity.html">Electricity Bill</a>
+    <a href="Fitness.html">Gym Plan</a>
+    <a href="JobApplication.html">Job Filter</a>
+    <a href="Ecommerce.html">Coupons</a>
+</div>
+    <div class="container">
+        <h2>E-commerce Coupon Redemption</h2>
+
+        <div class="coupon-info">
+            <h3>Available Coupons:</h3>
+            <p><strong>DISCOUNT10:</strong> 10% off on orders above $500.</p>
+            <p><strong>FREESHIP:</strong> Free shipping on orders above $200.</p>
+            <p><em>Note: Only one coupon can be used per order.</em></p>
+        </div>
+
+        <label>Enter Order Amount ($):</label>
+        <input type="number" id="orderAmount" placeholder="Enter order amount">
+
+        <label>Enter Coupon Code:</label>
+        <input type="text" id="couponCode" placeholder="Enter coupon code (DISCOUNT10 or FREESHIP)">
+
+        <button onclick="applyDiscount()">Apply Coupon</button>
+
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function applyCoupon(orderAmount, couponCode) {
+            let discount = 0;
+            let shippingCost = 10; // Default shipping charge
+
+            // Check if coupon code is valid
+            if (couponCode === "DISCOUNT10") {
+                if (orderAmount > 500) {
+                    discount = 10; // 10% off
+                } else {
+                    return { error: "❌ DISCOUNT10 requires an order above $500." };
+                }
+            } 
+            else if (couponCode === "FREESHIP") {
+                if (orderAmount > 200) {
+                    shippingCost = 0; // Free shipping
+                } else {
+                    return { error: "❌ FREESHIP requires an order above $200." };
+                }
+            } 
+            else if (couponCode !== "") {
+                return { error: "❌ Invalid coupon code! Use DISCOUNT10 or FREESHIP." };
+            }
+
+            // Final price calculation
+            let discountAmount = (orderAmount * discount) / 100;
+            let finalPrice = orderAmount - discountAmount + shippingCost;
+
+            return { finalPrice: finalPrice.toFixed(2), discountAmount: discountAmount.toFixed(2), shippingCost: shippingCost };
+        }
+
+        function applyDiscount() {
+            let orderAmount = parseFloat(document.getElementById("orderAmount").value);
+            let couponCode = document.getElementById("couponCode").value.toUpperCase().trim();
+            let message = document.getElementById("message");
+
+            if (isNaN(orderAmount) || orderAmount <= 0) {
+                message.style.color = "red";
+                message.textContent = "⚠️ Please enter a valid order amount.";
+                return;
+            }
+
+            let result = applyCoupon(orderAmount, couponCode);
+
+            if (result.error) {
+                message.style.color = "red";
+                message.textContent = result.error;
+            } else {
+                message.style.color = "green";
+                message.innerHTML = `
+                    🏷️ Discount Applied: <b>$${result.discountAmount}</b><br>
+                    🚚 Shipping Cost: <b>$${result.shippingCost}</b><br>
+                    💰 Final Price: <b>$${result.finalPrice}</b>
+                `;
+            }
+        }
+    </script>
+
+</body>
+</html>

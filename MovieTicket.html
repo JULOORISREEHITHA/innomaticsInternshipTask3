@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Pricing</title>
+    <style>
+        /* index */
+       
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        
+        h2 {
+            margin-bottom: 10px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://source.unsplash.com/1600x900/?cinema,movie,theater') no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- index -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Atm.html">ATM</a>
+        <a href="OnlineShopping.html">Shopping</a>
+        <a href="StudentGrade.html">Grading</a>
+        <a href="TrafficLight.html">Traffic Light</a>
+        <a href="Flight.html">Flight Booking</a>
+        <a href="Electricity.html">Electricity Bill</a>
+        <a href="Fitness.html">Gym Plan</a>
+        <a href="JobApplication.html">Job Filter</a>
+        <a href="Ecommerce.html">Coupons</a>
+    </div>
+
+    <div class="container">
+        <h2>Welcome to the Multi-Feature Web App</h2>
+        <p>Click on any section above to explore different functionalities.</p>
+    </div>
+
+
+    <div class="container">
+        <h2>Movie Ticket Pricing</h2>
+        
+        <label>Enter Age:</label>
+        <input type="number" id="age" placeholder="Enter your age">
+        
+        <label>Select Show Time (24-hour format):</label>
+        <input type="number" id="showTime" placeholder="Enter show time (e.g., 14 for 2 PM)">
+        
+        <button onclick="calculatePrice()">Calculate Ticket Price</button>
+        
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function calculateTicketPrice(age, showTime) {
+            const standardPrice = 12;
+            let discount = 0;
+
+            // Matinee discount (Before 5 PM → 20% off)
+            if (showTime < 17) {
+                discount += 20;
+            }
+
+            // Senior citizen discount (Above 60 → 30% off)
+            if (age > 60) {
+                discount += 30;
+            }
+
+            // Child discount (Below 12 → 40% off)
+            if (age < 12) {
+                discount += 40;
+            }
+
+            // Ensure discount doesn't exceed 100%
+            if (discount > 100) {
+                discount = 100;
+            }
+
+            let finalPrice = standardPrice - (standardPrice * discount / 100);
+            return { finalPrice: finalPrice.toFixed(2), discount: discount };
+        }
+
+        function calculatePrice() {
+            let age = parseInt(document.getElementById("age").value);
+            let showTime = parseInt(document.getElementById("showTime").value);
+            let message = document.getElementById("message");
+
+            if (isNaN(age) || age < 0 || isNaN(showTime) || showTime < 0 || showTime > 23) {
+                message.style.color = "red";
+                message.textContent = "⚠️ Please enter valid age and showtime (0-23 hours).";
+                return;
+            }
+
+            let result = calculateTicketPrice(age, showTime);
+            message.style.color = "green";
+
+            message.innerHTML = `
+                🎟️ Final Ticket Price: <b>$${result.finalPrice}</b> <br>
+                💰 Total Discount: <b>${result.discount}%</b>
+            `;
+        }
+    </script>
+
+</body>
+</html>

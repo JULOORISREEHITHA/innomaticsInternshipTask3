@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Membership Plan</title>
+    <style>
+        /* index */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/Gym.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        .container {
+            width: 80%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+        }
+       
+       
+        input[type="checkbox"] {
+            margin-right: 6px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- index -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Atm.html">ATM</a>
+        <a href="OnlineShopping.html">Shopping</a>
+        <a href="StudentGrade.html">Grading</a>
+        <a href="TrafficLight.html">Traffic Light</a>
+        <a href="Flight.html">Flight Booking</a>
+        <a href="Electricity.html">Electricity Bill</a>
+        <a href="Fitness.html">Gym Plan</a>
+        <a href="JobApplication.html">Job Filter</a>
+        <a href="Ecommerce.html">Coupons</a>
+    </div>
+
+    <div class="container">
+        <h2>Fitness Membership Plan Selector</h2>
+
+        <label><input type="checkbox" id="trainer"> I want a Personal Trainer</label><br>
+        <label><input type="checkbox" id="diet"> I want a Diet Plan</label><br>
+
+        <button onclick="suggestPlan()">Suggest Best Plan</button>
+
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function choosePlan(wantsTrainer, wantsDietPlan) {
+            if (wantsTrainer && wantsDietPlan) {
+                return { plan: "VIP Plan", price: "$80/month", description: "Includes Gym, Personal Trainer, and Diet Plan." };
+            } else if (wantsTrainer) {
+                return { plan: "Premium Plan", price: "$50/month", description: "Includes Gym and Personal Trainer." };
+            } else {
+                return { plan: "Basic Plan", price: "$20/month", description: "Includes Gym Access only." };
+            }
+        }
+
+        function suggestPlan() {
+            let wantsTrainer = document.getElementById("trainer").checked;
+            let wantsDietPlan = document.getElementById("diet").checked;
+            let message = document.getElementById("message");
+
+            let result = choosePlan(wantsTrainer, wantsDietPlan);
+
+            message.style.color = "green";
+            message.innerHTML = `
+                🏋️ Suggested Plan: <b>${result.plan}</b><br>
+                💰 Price: <b>${result.price}</b><br>
+                📋 <b>${result.description}</b>
+            `;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Calculator</title>
+    <style>
+        /* index */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/Electricity.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+        }
+        
+        
+        input, select,button  {
+            width: 99%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- index -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Atm.html">ATM</a>
+        <a href="OnlineShopping.html">Shopping</a>
+        <a href="StudentGrade.html">Grading</a>
+        <a href="TrafficLight.html">Traffic Light</a>
+        <a href="Flight.html">Flight Booking</a>
+        <a href="Electricity.html">Electricity Bill</a>
+        <a href="Fitness.html">Gym Plan</a>
+        <a href="JobApplication.html">Job Filter</a>
+        <a href="Ecommerce.html">Coupons</a>
+    </div>
+
+    <div class="container">
+        <h2>Electricity Bill Calculator</h2>
+
+        <input type="number" id="units" placeholder="Enter units consumed">
+        <select id="timeOfDay">
+            <option value="normal">Normal Hours (8 AM - 8 PM)</option>
+            <option value="peak">Peak Hours (8 PM - 8 AM)</option>
+        </select>
+        <button onclick="calculateBill()">Calculate Bill</button>
+
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function calculateElectricityBill(units, timeOfDay) {
+            let rate;
+
+            if (units < 100) {
+                rate = 5;
+            } else if (units <= 300) {
+                rate = 4;
+            } else {
+                rate = 3;
+            }
+
+            if (timeOfDay === "peak") {
+                rate *= 1.1; // 10% extra charge in peak hours
+            }
+
+            return (units * rate).toFixed(2);
+        }
+
+        function calculateBill() {
+            let units = document.getElementById("units").value;
+            let timeOfDay = document.getElementById("timeOfDay").value;
+            let message = document.getElementById("message");
+
+            if (units === "" || units <= 0) {
+                message.style.color = "red";
+                message.innerHTML = "⚠️ Please enter a valid number of units.";
+                return;
+            }
+
+            let billAmount = calculateElectricityBill(parseFloat(units), timeOfDay);
+
+            message.style.color = "green";
+            message.innerHTML = `💡 Total Bill: <b>$${billAmount}</b>`;
+        }
+    </script>
+
+</body>
+</html>

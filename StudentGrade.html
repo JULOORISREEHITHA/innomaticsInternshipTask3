@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grading System</title>
+    <style>
+        /* index */
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        
+        h2 {
+            margin-bottom: 10px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/Student grade.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body><!-- index -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Atm.html">ATM</a>
+        <a href="OnlineShopping.html">Shopping</a>
+        <a href="StudentGrade.html">Grading</a>
+        <a href="TrafficLight.html">Traffic Light</a>
+        <a href="Flight.html">Flight Booking</a>
+        <a href="Electricity.html">Electricity Bill</a>
+        <a href="Fitness.html">Gym Plan</a>
+        <a href="JobApplication.html">Job Filter</a>
+        <a href="Ecommerce.html">Coupons</a>
+    </div>
+
+
+
+
+    <div class="container">
+        <h2>Student Grading System</h2>
+        <label>Enter Marks (out of 100):</label>
+        <input type="number" id="marks" placeholder="Enter marks out of 100">
+        
+        <label>Enter Attendance Percentage (%):</label>
+        <input type="number" id="attendance" placeholder="Enter attendance out of 100">
+        
+        <button onclick="calculate()">Calculate Grade</button>
+        
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function calculateGrade(marks, attendance) {
+            let extraCredit = 0;
+
+            // Add extra 5 marks if attendance is above 90%
+            if (attendance > 90) {
+                extraCredit = 5;
+            }
+
+            let finalMarks = marks + extraCredit;
+
+            // Ensure marks do not exceed 100
+            if (finalMarks > 100) {
+                finalMarks = 100;
+            }
+
+            // Determine grade
+            let grade = "";
+            if (finalMarks >= 90) {
+                grade = "A";
+            } else if (finalMarks >= 80) {
+                grade = "B";
+            } else if (finalMarks >= 70) {
+                grade = "C";
+            } else if (finalMarks >= 60) {
+                grade = "D";
+            } else {
+                grade = "F";
+            }
+
+            return {
+                finalMarks: finalMarks,
+                originalMarks: marks,
+                extraCredit: extraCredit,
+                grade: grade
+            };
+        }
+
+        function calculate() {
+            let marks = parseFloat(document.getElementById("marks").value);
+            let attendance = parseFloat(document.getElementById("attendance").value);
+            let message = document.getElementById("message");
+
+            if (isNaN(marks) || marks < 0 || marks > 100 || isNaN(attendance) || attendance < 0 || attendance > 100) {
+                message.style.color = "red";
+                message.textContent = "⚠️ Please enter valid marks and attendance.";
+                return;
+            }
+
+            let result = calculateGrade(marks, attendance);
+            message.style.color = "green";
+
+            // Adjust message based on extra credit
+            let marksText = result.extraCredit > 0
+                ? `🎓 Final Marks (after extra credit): ${result.finalMarks}`
+                : `🎓 Final Marks: ${result.finalMarks}`;
+
+            message.innerHTML = `
+                ${marksText} <br>
+                🏆 Grade: <b>${result.grade}</b>
+            `;
+        }
+    </script>
+
+</body>
+</html>

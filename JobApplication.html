@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Filter</title>
+    <style>
+        /* index */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/Job.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+        }
+        input,select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        select {
+            width: 95%;
+           
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<!-- index -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="Atm.html">ATM</a>
+    <a href="OnlineShopping.html">Shopping</a>
+    <a href="StudentGrade.html">Grading</a>
+    <a href="TrafficLight.html">Traffic Light</a>
+    <a href="Flight.html">Flight Booking</a>
+    <a href="Electricity.html">Electricity Bill</a>
+    <a href="Fitness.html">Gym Plan</a>
+    <a href="JobApplication.html">Job Filter</a>
+    <a href="Ecommerce.html">Coupons</a>
+</div>
+
+    <div class="container">
+        <h2>Job Application Filter</h2>
+
+        <label>Enter Age:</label>
+        <input type="number" id="age" placeholder="Enter your age">
+
+        <label>Years of Experience:</label>
+        <input type="number" id="experience" placeholder="Enter years of experience">
+
+        <label>Minimum Qualification:</label>
+        <select id="qualification">
+            <option value="None">None</option>
+            <option value="High School">High School</option>
+            <option value="Associate Degree">Associate Degree</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Master's Degree">Master's Degree</option>
+            <option value="PhD">PhD</option>
+        </select>
+
+        <button onclick="checkEligibility()">Check Eligibility</button>
+
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function isEligibleForJob(age, experience, qualification) {
+            if (age < 21 || age > 55) {
+                return "❌ Not Eligible: Age must be between 21 and 55.";
+            }
+            if (experience < 2) {
+                return "❌ Not Eligible: Minimum 2 years of experience required.";
+            }
+            if (qualification !== "Bachelor's Degree" && qualification !== "Master's Degree" && qualification !== "PhD") {
+                return "❌ Not Eligible: Minimum qualification required is a Bachelor's Degree.";
+            }
+            return "✅ Congratulations! You are eligible for the job.";
+        }
+
+        function checkEligibility() {
+            let age = parseInt(document.getElementById("age").value);
+            let experience = parseInt(document.getElementById("experience").value);
+            let qualification = document.getElementById("qualification").value;
+            let message = document.getElementById("message");
+
+            if (isNaN(age) || isNaN(experience) || age < 0 || experience < 0) {
+                message.style.color = "red";
+                message.textContent = "⚠️ Please enter valid age and experience.";
+                return;
+            }
+
+            let result = isEligibleForJob(age, experience, qualification);
+            message.style.color = result.includes("✅") ? "green" : "red";
+            message.innerHTML = result;
+        }
+    </script>
+
+</body>
+</html>

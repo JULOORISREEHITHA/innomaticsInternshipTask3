@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Ticket Booking</title>
+    <style>
+        /* index */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/FlightBooking.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background:transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+            background: #007bff;
+        }
+        .navbar a:hover {
+            background: #0056b3;
+        }
+        
+        
+        .container {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 50px auto;
+        }
+        
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- index -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Atm.html">ATM</a>
+        <a href="OnlineShopping.html">Shopping</a>
+        <a href="StudentGrade.html">Grading</a>
+        <a href="TrafficLight.html">Traffic Light</a>
+        <a href="Flight.html">Flight Booking</a>
+        <a href="Electricity.html">Electricity Bill</a>
+        <a href="Fitness.html">Gym Plan</a>
+        <a href="JobApplication.html">Job Filter</a>
+        <a href="Ecommerce.html">Coupons</a>
+    </div>
+    <div class="container">
+        <h2>Flight Ticket Booking</h2>
+
+        <label for="classType">Select Class:</label>
+        <select id="classType">
+            <option value="economy">Economy Class ($300)</option>
+            <option value="business">Business Class (+$200)</option>
+            <option value="first">First Class (+$500)</option>
+        </select>
+
+        <label for="luggage">Luggage Weight (kg):</label>
+        <input type="number" id="luggage" placeholder="Enter luggage weight" min="0"  >
+
+        <label for="age">Enter Age:</label>
+        <input type="number" id="age" placeholder="Enter your age" min="0">
+
+        <label><input type="checkbox" id="student"> I am a Student (15% Discount)</label>
+        <label><input type="checkbox" id="senior"> I am a Senior (10% Discount)</label>
+
+        <button onclick="calculateFare()">Book Ticket</button>
+
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function calculateFlightFare(classType, luggageWeight, isStudent, isSenior) {
+            let baseFare = 300;
+            let extraCharge = 0;
+
+            if (classType === "business") {
+                extraCharge = 200;
+            } else if (classType === "first") {
+                extraCharge = 500;
+            }
+
+            let totalFare = baseFare + extraCharge;
+
+            // Luggage charge: $50 per extra 10kg over 20kg
+            if (luggageWeight > 20) {
+                let extraLuggage = Math.ceil((luggageWeight - 20) / 10); // Calculate extra 10kg units
+                totalFare += extraLuggage * 50;
+            }
+
+            // Discounts
+            if (isStudent) {
+                totalFare *= 0.85; // 15% off
+            } else if (isSenior) {
+                totalFare *= 0.90; // 10% off
+            }
+
+            return totalFare.toFixed(2);
+        }
+
+        function calculateFare() {
+            let classType = document.getElementById("classType").value;
+            let luggageWeight = parseFloat(document.getElementById("luggage").value) || 0;
+            let age = parseInt(document.getElementById("age").value) || 0;
+            let isStudent = document.getElementById("student").checked;
+            let isSenior = document.getElementById("senior").checked;
+
+            let message = document.getElementById("message");
+
+            if (age > 60) {
+                isSenior = true; // Auto-apply senior discount
+            }
+
+            let totalFare = calculateFlightFare(classType, luggageWeight, isStudent, isSenior);
+
+            message.style.color = "green";
+            message.innerHTML = `✈️ Total Fare: <b>$${totalFare}</b>`;
+        }
+    </script>
+
+</body>
+</html>
